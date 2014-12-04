@@ -6,25 +6,30 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.app.Activity;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 public class MainActivity extends ActionBarActivity {
-
+	private WebView webView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		
 		
-		
+		//this.addJavascriptInterface(new CustomJavaScriptInterface(webViewContext), "Android");
 		
 		setContentView(R.layout.activity_main);
+		webView = (WebView) findViewById(R.id.webView1);
+		webView.getSettings().setBuiltInZoomControls(true);
+		webView.getSettings().setSupportZoom(true);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.loadUrl("file:///android_asset/main.html");
 	}
 
 	@Override

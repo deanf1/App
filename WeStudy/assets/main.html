@@ -1,0 +1,85 @@
+<html>
+
+<head>	
+<style>* {margin:0;padding:0;}</style>
+
+<script type="text/javascript">
+
+function FindPosition(oElement)
+{
+  if(typeof( oElement.offsetParent ) != "undefined")
+  {
+    for(var posX = 0, posY = 0; oElement; oElement = oElement.offsetParent)
+    {
+      posX += oElement.offsetLeft;
+      posY += oElement.offsetTop;
+    }
+      return [ posX, posY ];
+    }
+    else
+    {
+      return [ oElement.x, oElement.y ];
+    }
+}
+function drawCircle(coordX, coordY) {
+	var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var centerX = coordX;
+      var centerY = coordY;
+      var radius = 30;
+
+      context.beginPath();
+      context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+      context.fillStyle = 'green';
+      context.fill();
+      context.lineWidth = 5;
+      context.strokeStyle = '#003300';
+      context.stroke();
+}
+function GetCoordinates(e)
+{
+  var PosX = 0;
+  var PosY = 0;
+  var ImgPos;
+  ImgPos = FindPosition(myImg);
+  if (!e) var e = window.event;
+  if (e.pageX || e.pageY)
+  {
+    PosX = e.pageX;
+    PosY = e.pageY;
+  }
+  else if (e.clientX || e.clientY)
+    {
+      PosX = e.clientX + document.body.scrollLeft
+        + document.documentElement.scrollLeft;
+      PosY = e.clientY + document.body.scrollTop
+        + document.documentElement.scrollTop;
+    }
+  PosX = PosX - ImgPos[0];
+  PosY = PosY - ImgPos[1];
+  document.getElementById("x").innerHTML = PosX;
+  document.getElementById("y").innerHTML = PosY;
+  drawCircle(PosX, PosY);
+}
+
+</script>
+</head>
+
+<body>
+
+<!-- <canvas id="myCanvas" ></canvas> -->
+
+<img id="mapImg" alt="" src="umbcmap2.png" height="90%"/>
+<script type="text/javascript">
+
+var myImg = document.getElementById("mapImg");
+myImg.onmousedown = GetCoordinates;
+
+//this.addJavascriptInterface(new CustomJavaScriptInterface(webViewContext), "Android");
+
+</script>
+
+<p>X:<span id="x"></span></p>
+<p>Y:<span id="y"></span></p>
+</body>
+</html>
