@@ -57,9 +57,13 @@ function GetCoordinates(e)
     }
   PosX = PosX - ImgPos[0];
   PosY = PosY - ImgPos[1];
-  document.getElementById("x").innerHTML = PosX;
-  document.getElementById("y").innerHTML = PosY;
-  drawCircle(PosX, PosY);
+  var height = document.getElementById('mapImg').height;
+  var width = document.getElementById('mapImg').width;
+  console.log(height, width);
+  document.getElementById("x").innerHTML = PosX / width;
+  document.getElementById("y").innerHTML = PosY / height;
+  JSInterface.changeActivity();
+  //drawCircle(PosX, PosY);
 }
 
 </script>
@@ -74,8 +78,6 @@ function GetCoordinates(e)
 
 var myImg = document.getElementById("mapImg");
 myImg.onmousedown = GetCoordinates;
-
-//this.addJavascriptInterface(new CustomJavaScriptInterface(webViewContext), "Android");
 
 </script>
 

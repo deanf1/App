@@ -7,15 +7,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
 public class MainActivity extends ActionBarActivity {
 	private WebView webView;
+	JavaScriptInterface JSInterface;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +33,12 @@ public class MainActivity extends ActionBarActivity {
 		webView.getSettings().setBuiltInZoomControls(true);
 		webView.getSettings().setSupportZoom(true);
 		webView.getSettings().setJavaScriptEnabled(true);
+		
+		JSInterface = new JavaScriptInterface(this);
+        
+		
 		webView.loadUrl("file:///android_asset/main.html");
+		webView.addJavascriptInterface(JSInterface, "JSInterface"); 
 	}
 
 	@Override
@@ -49,5 +58,24 @@ public class MainActivity extends ActionBarActivity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	public class JavaScriptInterface {
+        Context mContext;
+
+        /** Instantiate the interface and set the context */
+        JavaScriptInterface(Context c) {
+            mContext = c;
+        }
+
+        public void changeActivity()
+        {
+            Intent i = new Intent(MainActivity.this, CreateStudySessionActivity.class);
+            startActivity(i);
+            finish();
+        }
+    }
+	public void newWindow(View view) {
+		 Intent intent = new Intent(this, CreateStudySessionActivity.class);
+		  startActivity(intent);
 	}
 }
