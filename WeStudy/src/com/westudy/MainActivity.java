@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 public class MainActivity extends ActionBarActivity {
@@ -34,11 +35,13 @@ public class MainActivity extends ActionBarActivity {
 		webView.getSettings().setSupportZoom(true);
 		webView.getSettings().setJavaScriptEnabled(true);
 		
-		JSInterface = new JavaScriptInterface(this);
-        
+		//JSInterface = new JavaScriptInterface(this);
+		webView.addJavascriptInterface(new JavaScriptInterface(this), "JSInterface"); 
 		
 		webView.loadUrl("file:///android_asset/main.html");
-		webView.addJavascriptInterface(JSInterface, "JSInterface"); 
+		
+		
+		//newWindow(webView);
 	}
 
 	@Override
@@ -59,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
 	public class JavaScriptInterface {
         Context mContext;
 
@@ -66,14 +70,17 @@ public class MainActivity extends ActionBarActivity {
         JavaScriptInterface(Context c) {
             mContext = c;
         }
-
-        public void changeActivity()
+        @JavascriptInterface
+        public void changeActivity(double x, double y)
         {
             Intent i = new Intent(MainActivity.this, CreateStudySessionActivity.class);
+            i.putExtra("xCoord", x);
+            i.putExtra("yCoord", y);
             startActivity(i);
-            finish();
+            //finish();
         }
     }
+	@JavascriptInterface
 	public void newWindow(View view) {
 		 Intent intent = new Intent(this, CreateStudySessionActivity.class);
 		  startActivity(intent);

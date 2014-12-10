@@ -1,7 +1,8 @@
 <html>
 
 <head>	
-<style>* {margin:0;padding:0;}</style>
+<style>* {margin:0;padding:0;}
+		canvas { background:url(umbcmap1.png) }</style>
 
 <script type="text/javascript">
 
@@ -22,7 +23,7 @@ function FindPosition(oElement)
     }
 }
 function drawCircle(coordX, coordY) {
-	var canvas = document.getElementById('myCanvas');
+	var canvas = document.getElementById('mapImg');
       var context = canvas.getContext('2d');
       var centerX = coordX;
       var centerY = coordY;
@@ -32,7 +33,7 @@ function drawCircle(coordX, coordY) {
       context.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
       context.fillStyle = 'green';
       context.fill();
-      context.lineWidth = 5;
+      context.lineWidth = 2;
       context.strokeStyle = '#003300';
       context.stroke();
 }
@@ -62,8 +63,11 @@ function GetCoordinates(e)
   console.log(height, width);
   document.getElementById("x").innerHTML = PosX / width;
   document.getElementById("y").innerHTML = PosY / height;
-  JSInterface.changeActivity();
+  var xDouble = PosX / width;
+  var yDouble = PosY / height;
   //drawCircle(PosX, PosY);
+  JSInterface.changeActivity(xDouble, yDouble);
+  
 }
 
 </script>
@@ -71,9 +75,9 @@ function GetCoordinates(e)
 
 <body>
 
-<!-- <canvas id="myCanvas" ></canvas> -->
+<!-- <canvas id="mapImg" width="2048" height="2041" style="border:1px solid" ></canvas> -->
 
-<img id="mapImg" alt="" src="umbcmap2.png" height="90%"/>
+<img id="mapImg" alt="" src="umbcmap2.png" height="90%"/> 
 <script type="text/javascript">
 
 var myImg = document.getElementById("mapImg");

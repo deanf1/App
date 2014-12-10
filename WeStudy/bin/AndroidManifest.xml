@@ -27,7 +27,7 @@
         
         <activity
         android:name=".CreateStudySessionActivity"
-        android:label="newWindoww"
+        android:label="Create Session"
         android:parentActivityName=".MainActivity" >
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
